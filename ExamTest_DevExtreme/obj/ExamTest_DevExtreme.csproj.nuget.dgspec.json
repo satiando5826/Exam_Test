@@ -1,0 +1,152 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\SathianpornKhamdee\\source\\repos\\Exam_Test\\ExamTest_DevExtreme\\ExamTest_DevExtreme.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\SathianpornKhamdee\\source\\repos\\Exam_Test\\ExamTest_DevExtreme\\ExamTest_DevExtreme.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\SathianpornKhamdee\\source\\repos\\Exam_Test\\ExamTest_DevExtreme\\ExamTest_DevExtreme.csproj",
+        "projectName": "ExamTest_DevExtreme",
+        "projectPath": "C:\\Users\\SathianpornKhamdee\\source\\repos\\Exam_Test\\ExamTest_DevExtreme\\ExamTest_DevExtreme.csproj",
+        "packagesPath": "C:\\Users\\SathianpornKhamdee\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\SathianpornKhamdee\\source\\repos\\Exam_Test\\ExamTest_DevExtreme\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\SathianpornKhamdee\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 19.1.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\DevExpress 19.1\\Components\\System\\Components\\Packages": {},
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {
+              "C:\\Users\\SathianpornKhamdee\\source\\repos\\Exam_Test\\Exam_Test\\Exam_Test.csproj": {
+                "projectPath": "C:\\Users\\SathianpornKhamdee\\source\\repos\\Exam_Test\\Exam_Test\\Exam_Test.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "DevExtreme.AspNet.Core": {
+              "target": "Package",
+              "version": "[19.1.4, )"
+            },
+            "DevExtreme.AspNet.Data": {
+              "target": "Package",
+              "version": "[2.3.0, )"
+            },
+            "Microsoft.AspNetCore.All": {
+              "target": "Package",
+              "version": "[2.2.5, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[2.2.3, )"
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    },
+    "C:\\Users\\SathianpornKhamdee\\source\\repos\\Exam_Test\\Exam_Test\\Exam_Test.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\SathianpornKhamdee\\source\\repos\\Exam_Test\\Exam_Test\\Exam_Test.csproj",
+        "projectName": "Exam_Test",
+        "projectPath": "C:\\Users\\SathianpornKhamdee\\source\\repos\\Exam_Test\\Exam_Test\\Exam_Test.csproj",
+        "packagesPath": "C:\\Users\\SathianpornKhamdee\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\SathianpornKhamdee\\source\\repos\\Exam_Test\\Exam_Test\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\SathianpornKhamdee\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 19.1.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\DevExpress 19.1\\Components\\System\\Components\\Packages": {},
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "DevExtreme.AspNet.Data": {
+              "target": "Package",
+              "version": "[2.3.0, )"
+            },
+            "Microsoft.AspNetCore.All": {
+              "target": "Package",
+              "version": "[2.2.5, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[2.2.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[2.2.4, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}

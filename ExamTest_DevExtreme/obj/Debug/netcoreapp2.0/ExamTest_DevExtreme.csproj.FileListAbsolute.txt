@@ -1,0 +1,11 @@
+C:\Users\SathianpornKhamdee\source\repos\Exam_Test\ExamTest_DevExtreme\bin\Debug\netcoreapp2.0\ExamTest_DevExtreme.deps.json
+C:\Users\SathianpornKhamdee\source\repos\Exam_Test\ExamTest_DevExtreme\bin\Debug\netcoreapp2.0\ExamTest_DevExtreme.runtimeconfig.json
+C:\Users\SathianpornKhamdee\source\repos\Exam_Test\ExamTest_DevExtreme\bin\Debug\netcoreapp2.0\ExamTest_DevExtreme.runtimeconfig.dev.json
+C:\Users\SathianpornKhamdee\source\repos\Exam_Test\ExamTest_DevExtreme\bin\Debug\netcoreapp2.0\ExamTest_DevExtreme.dll
+C:\Users\SathianpornKhamdee\source\repos\Exam_Test\ExamTest_DevExtreme\bin\Debug\netcoreapp2.0\ExamTest_DevExtreme.pdb
+C:\Users\SathianpornKhamdee\source\repos\Exam_Test\ExamTest_DevExtreme\obj\Debug\netcoreapp2.0\ExamTest_DevExtreme.csprojAssemblyReference.cache
+C:\Users\SathianpornKhamdee\source\repos\Exam_Test\ExamTest_DevExtreme\obj\Debug\netcoreapp2.0\ExamTest_DevExtreme.csproj.CoreCompileInputs.cache
+C:\Users\SathianpornKhamdee\source\repos\Exam_Test\ExamTest_DevExtreme\obj\Debug\netcoreapp2.0\ExamTest_DevExtreme.AssemblyInfoInputs.cache
+C:\Users\SathianpornKhamdee\source\repos\Exam_Test\ExamTest_DevExtreme\obj\Debug\netcoreapp2.0\ExamTest_DevExtreme.AssemblyInfo.cs
+C:\Users\SathianpornKhamdee\source\repos\Exam_Test\ExamTest_DevExtreme\obj\Debug\netcoreapp2.0\ExamTest_DevExtreme.dll
+C:\Users\SathianpornKhamdee\source\repos\Exam_Test\ExamTest_DevExtreme\obj\Debug\netcoreapp2.0\ExamTest_DevExtreme.pdb
