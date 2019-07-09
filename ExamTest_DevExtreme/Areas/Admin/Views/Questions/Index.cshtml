@@ -1,0 +1,141 @@
+﻿@model List<Question>
+
+@using Exam_Test.Models
+<h2>Questions</h2>
+<br /><br />
+<div class="left">
+
+    @(Html.DevExtreme().List()
+        .ID("list")
+        .Grouped(true)
+        .Visible(true)
+        .SearchEnabled(true)
+        .SelectionMode(ListSelectionMode.Single)
+        .DataSource(d => d.Mvc().Controller("Questions").Key("questionId").LoadAction("GetQuestions"))
+        .DataSourceOptions(o => o.Group("Section.name").SearchExpr(new string[] { "questionStr", "Section.name"}))
+        .SelectedItems(new[] { Model.FirstOrDefault() })
+        .ItemTemplate(@<text>
+                    <div>
+                        <div class="hotel">
+                            <div class="name"><%= questionStr %></div>
+                        </div>
+                        <div class="price-container">
+                            <div class="price"><10></div>
+                            <div class="caption">Point</div>
+                        </div>
+                    </div>
+        </text>)
+.OnSelectionChanged("selectionChanged")
+    )
+</div>
+<div class="right">
+    <div class="header">
+        <div class="name-container">
+            <div class="name"></div>
+            <div class="type"></div>
+        </div>
+        <div class="price-container">
+            <div class="price"></div>
+            <div class="caption">Point</div>
+        </div>
+    </div>
+    @*@(Html.DevExtreme().TileView()
+            .ID("tile")
+            .NoDataText("")
+            .Height(224)
+            .BaseItemHeight(100)
+            .BaseItemWidth(137)
+            .ItemMargin(12)
+            .ItemTemplate(@<text>
+                        <div class="tile-image" style="background-image: url(<%= '../../images/hotels/' + FileName %>);"></div>
+            </text>)
+        )*@
+
+    <div class="address"></div>
+    <div class="description"></div>
+</div>
+
+<script>
+    function selectionChanged(e) {
+        var question = e.addedItems[0];
+        var tile = $("#tile").dxTileView("instance");
+        //tile.option("dataSource", hotel.Images);
+        $(".header .name").text(question.questionStr);
+        $(".header .price").text("10");// $(".header .price").text("$" + hotel.Price);
+        //$(".header .type").removeClass("diamond platinum gold");
+        //$(".header .type").addClass(question.type.toLowerCase());
+        $(".right .description").text("Description");//$(".right .description").text(hotel.Description);
+        // $(".right .address").text(hotel.Postal_Code + ", " + hotel.Address);
+    }
+</script>
+
+<style>
+
+    .left {
+        float: left;
+        width: 330px;
+        height: 470px;
+        padding: 20px;
+        background: rgba(191, 191, 191, 0.15);
+        margin-right: 30px;
+    }
+
+    .right {
+        overflow: hidden;
+    }
+
+    .left #list .dx-list-group-header {
+        color: #f05b41;
+        font-weight: normal;
+        font-size: 18px;
+    }
+
+    .left #list .hotel {
+        float: left;
+    }
+
+        .left #list .hotel .name {
+            font-weight: bold;
+        }
+
+    .right .header {
+        height: 70px;
+    }
+
+        .right .header .name-container {
+            float: left;
+        }
+
+        .right .header .name {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .right .header .price-container {
+            padding-top: 27px;
+        }
+
+    .right .name-container .type {
+        margin-top: 0;
+    }
+
+    .right #tile {
+        margin: 0 -12px 0 -12px;
+    }
+
+    .right .tile-image {
+        height: 100%;
+        width: 100%;
+        background-size: cover;
+    }
+
+    .right .address {
+        padding-top: 30px;
+        font-size: 18px;
+        opacity: 0.7;
+    }
+
+    .right .description {
+        margin: 10px 0;
+    }
+</style>
