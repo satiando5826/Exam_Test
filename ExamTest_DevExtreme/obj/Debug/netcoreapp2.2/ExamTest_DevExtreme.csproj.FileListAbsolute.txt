@@ -30,3 +30,4 @@ C:\Users\SathianpornKhamdee\source\repos\Exam_Test\ExamTest_DevExtreme\obj\Debug
 C:\Users\SathianpornKhamdee\source\repos\Exam_Test\ExamTest_DevExtreme\obj\Debug\netcoreapp2.2\Razor\Areas\Admin\Views\_ViewImports.g.cshtml.cs
 C:\Users\SathianpornKhamdee\source\repos\Exam_Test\ExamTest_DevExtreme\obj\Debug\netcoreapp2.2\Razor\Areas\Admin\Views\_ViewStart.g.cshtml.cs
 C:\Users\SathianpornKhamdee\source\repos\Exam_Test\ExamTest_DevExtreme\obj\Debug\netcoreapp2.2\Razor\Areas\Admin\Views\Exams\Index.g.cshtml.cs
+C:\Users\SathianpornKhamdee\source\repos\Exam_Test\ExamTest_DevExtreme\obj\Debug\netcoreapp2.2\Razor\Areas\Admin\Views\Sections\Index.g.cshtml.cs

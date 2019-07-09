@@ -28,9 +28,7 @@ namespace ExamTest_DevExtreme.Areas.Admin.Controllers
         [HttpGet]
         public object GetExams(DataSourceLoadOptions loadOptions)
         {
-            List<Exam> exams = _db.Exams.Include(e => e.subject).ToList();
-            return exams;
-            //return DataSourceLoader.Load(exams, loadOptions);
+            return DataSourceLoader.Load(_db.Exams, loadOptions);
         }
         
         [HttpGet]
