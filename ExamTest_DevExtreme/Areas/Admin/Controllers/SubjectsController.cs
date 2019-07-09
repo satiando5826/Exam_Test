@@ -25,7 +25,7 @@ namespace ExamTest_DevExtreme.Areas.Admin
             return View();
         }
         [HttpGet]
-        public object GetSubject(DataSourceLoadOptions loadOptions)
+        public object GetSubjects(DataSourceLoadOptions loadOptions)
         {
             return DataSourceLoader.Load(_db.Subjects, loadOptions);
         }
@@ -34,10 +34,8 @@ namespace ExamTest_DevExtreme.Areas.Admin
         public IActionResult Post(string values)
         {
             var newSubject = new Subject();
-            newSubject.subjectsId = new Guid();
-            newSubject.subjectsId = Guid.NewGuid();
-
-            Guid testGuid = Guid.NewGuid();
+            newSubject.subjectId = new Guid();
+            newSubject.subjectId = Guid.NewGuid();
 
             JsonConvert.PopulateObject(values, newSubject);
 
@@ -53,7 +51,7 @@ namespace ExamTest_DevExtreme.Areas.Admin
         [HttpPut]
         public IActionResult Put(Guid key, string values)
         {
-            var subject = _db.Subjects.First(a => a.subjectsId == key);
+            var subject = _db.Subjects.First(a => a.subjectId == key);
             JsonConvert.PopulateObject(values, subject);
 
             if (!TryValidateModel(subject))
@@ -67,7 +65,7 @@ namespace ExamTest_DevExtreme.Areas.Admin
         [HttpDelete]
         public void Delete(Guid key)
         {
-            var subject = _db.Subjects.First(a => a.subjectsId == key);
+            var subject = _db.Subjects.First(a => a.subjectId == key);
             _db.Subjects.Remove(subject);
             _db.SaveChanges();
         }
