@@ -1,0 +1,258 @@
+﻿@using Exam_Test.Models
+@model Exam_Test.Models.Question
+
+<h1>Create Question</h1>
+<br /><br />
+
+@*NOT WORK*@
+
+@using (Html.BeginForm("CreateQuestionPost", "QuestionsController", FormMethod.Post))
+{
+
+@(Html.DevExtreme().Form<Exam_Test.Models.Question>()
+        .ID("form")
+        .ShowColonAfterLabel(true)
+        .LabelLocation(FormLabelLocation.Left)
+
+        .Items(items =>
+        {
+            items.AddSimpleFor(q => q.questionStr)
+        .Editor(e => e
+            .TextArea()
+            
+        )
+        .IsRequired(true);
+
+            items.AddSimpleFor(q => q.type)
+            .Editor(e => e.SelectBox()
+                .DisplayExpr("type")
+                .DataSource(Html.GetEnumSelectList<QuestionType>()
+                                .Select(l => new { Value = int.Parse(l.Value), Text = l.Text })
+                            )
+                .ValueExpr("Value")
+                .DisplayExpr("Text")
+            )
+            .IsRequired(false);
+
+            items.AddSimpleFor(q => q.sectionId)
+            .Editor(e => e.DropDownBox()
+               .ValueExpr("sectionId")
+               .DisplayExpr("name")
+               .DropDownOptions(o => o.Height(350))
+               .DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetSections")
+               .UpdateAction("Put")
+               .InsertAction("Post")
+               .DeleteAction("Delete").Key("sectionId"))
+               .Placeholder("Select a value...")
+               .ShowClearButton(true)
+               //.OnValueChanged("treeBox_valueChanged")
+               //.ContentTemplate(new TemplateName("EmbeddedTreeViewSingle"))
+            )
+            .IsRequired(false);
+
+
+            items.AddSimpleFor(q => q.hint)
+            .Editor(e => e
+            .TextArea()
+        )
+        .IsRequired(false);
+
+       
+            items.AddButton()
+                    .HorizontalAlignment(HorizontalAlignment.Left)
+                    .ButtonOptions(b => b.Text("Create")
+                        .Type(ButtonType.Success)
+                        .UseSubmitBehavior(true)
+                        
+                );
+        }
+        )
+        .FormData(Model)
+        
+        
+)
+
+
+}
+
+
+
+
+
+@*
+             //   Question
+                @(Html.DevExtreme().TextAreaFor(q => q.questionStr)
+                )
+            
+
+            //    <div>Question Type:</div>
+                @(Html.DevExtreme().SelectBox()
+                .DisplayExpr("type")
+                .DataSource(Html.GetEnumSelectList<QuestionType>()
+                                .Select(l => new { Value = int.Parse(l.Value), Text = l.Text })
+                            )
+                .ValueExpr("Value")
+                .DisplayExpr("Text")
+
+                //.OnValueChanged("selectBox_valueChanged")
+                )
+           
+
+             //   <div>Topic</div>
+                @(Html.DevExtreme().DropDownBox()
+
+               .ValueExpr("sectionId")
+               .DisplayExpr("name")
+               .DropDownOptions(o => o.Height(350))
+               .DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetSections")
+               .UpdateAction("Put")
+               .InsertAction("Post")
+               .DeleteAction("Delete").Key("sectionId"))
+               .Placeholder("Select a value...")
+               .ShowClearButton(true)
+               .OnValueChanged("treeBox_valueChanged")
+               .ContentTemplate(new TemplateName("EmbeddedTreeViewSingle"))
+
+                )
+             
+
+                Hint
+                @(Html.DevExtreme().TextAreaFor(q => q.hint)
+                )
+            *@
+
+
+<style>
+
+    form {
+    margin: 10px;
+}
+
+    .first-group,
+    .second-group {
+        padding: 20px;
+    }
+
+    .second-group {
+        background-color: rgba(191, 191, 191, 0.15);
+    }
+
+
+    .full-width-content {
+        width: 100%;
+        margin-top: 30px;
+    }
+
+        .full-width-content > .dx-widget {
+            margin-bottom: 20px;
+        }
+
+        .full-width-content .dx-field {
+            max-width: 385px;
+        }
+
+
+    .dx-fieldset {
+        height: 500px;
+    }
+</style>
+
+
+<script>
+
+
+    function getFormInstance() {
+        return $("#form").dxForm("instance");
+    }
+
+    function selectBox_valueChanged(data) {
+        getFormInstance().option("formData", data.value);
+    }
+
+    function labelLocation_changed(data) {
+        getFormInstance().option("labelLocation", data.value);
+    }
+
+    function colCount_changed(data) {
+        getFormInstance().option("colCount", data.value);
+    }
+
+    function minColWidth_changed(data) {
+        getFormInstance().option("minColWidth", data.value);
+    }
+
+    function formWidth_changed(data) {
+        getFormInstance().option("width", data.value);
+    }
+
+    function readOnly_changed(data) {
+        getFormInstance().option("readOnly", data.value);
+    }
+
+    function showColonAfterLabel_changed(data) {
+        getFormInstance().option("showColonAfterLabel", data.value);
+    }
+
+
+    function syncTreeViewSelection(treeView, value) {
+        if (!value) {
+            treeView.unselectAll();
+        } else {
+            treeView.selectItem(value);
+        }
+    }
+
+    function getSelectedItemsKeys(items) {
+        var result = [];
+        items.forEach(function (item) {
+            if (item.selected) {
+                result.push(item.key);
+            }
+            if (item.items.length) {
+                result = result.concat(getSelectedItemsKeys(item.items));
+            }
+        });
+        return result;
+    }
+
+    function treeBox_valueChanged(e) {
+        var $treeView = e.component.content().find(".dx-treeview");
+        if($treeView.length) {
+            syncTreeViewSelection($treeView.dxTreeView("instance"), e.value);
+        }
+    }
+
+    //form
+    function getFormInstance() {
+        return $("#form").dxForm("instance");
+    }
+</script>
+
+@using (Html.DevExtreme().NamedTemplate("EmbeddedTreeViewSingle"))
+{
+    @(Html.DevExtreme().TreeView()
+        .DataSource(d => d.Mvc().Controller("Sections").Key("sectionId")
+            .LoadAction("GetSections"))
+        .KeyExpr("sectionId")
+        .DisplayExpr("name")
+        .ItemsExpr("name")
+        .ParentIdExpr("parentId")
+        .DataStructure(TreeViewDataStructure.Plain)
+        .SelectionMode(NavSelectionMode.Single)
+        .SelectByClick(true)
+        .Height(235)
+        .OnItemSelectionChanged(@<text>
+                    function(args) {
+                    var nodes = args.component.getNodes(),
+                    value = getSelectedItemsKeys(nodes);
+
+                    component.option("value", value);
+                    }
+        </text>)
+        .OnContentReady(@<text>
+            function(args) {
+            syncTreeViewSelection(args.component, component.option("value"));
+            }
+        </text>)
+    )
+}

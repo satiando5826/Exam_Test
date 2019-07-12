@@ -9,12 +9,14 @@ using Exam_Test.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace ExamTest_DevExtreme.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class QuestionsController : Controller
     {
+        
         private readonly ExamTestDbContext _db;
 
         public QuestionsController(ExamTestDbContext db)
@@ -59,7 +61,8 @@ namespace ExamTest_DevExtreme.Areas.Admin.Controllers
             newquestion.questionId = new Guid();
             newquestion.questionId = Guid.NewGuid();
             JsonConvert.PopulateObject(values, newquestion);
-
+            newquestion.Section = _db.Sections.Where(s => s.sectionId == newquestion.sectionId)
+                   .FirstOrDefault();
             if (!TryValidateModel(newquestion))
                 return BadRequest();
 
@@ -73,10 +76,12 @@ namespace ExamTest_DevExtreme.Areas.Admin.Controllers
         [HttpPut]
         public IActionResult Put(Guid key, string values)
         {
-            var question = _db.Questions.First(a => a.questionId == key);
-            JsonConvert.PopulateObject(values, question);
-
-            if (!TryValidateModel(question))
+            var newquestion = _db.Questions.First(a => a.questionId == key);
+            JsonConvert.PopulateObject(values, newquestion);
+            newquestion.Section = _db.Sections.Where(s => s.sectionId == newquestion.sectionId)
+                   .FirstOrDefault();
+            
+            if (!TryValidateModel(newquestion))
                 return BadRequest();
 
             _db.SaveChanges();
@@ -92,6 +97,30 @@ namespace ExamTest_DevExtreme.Areas.Admin.Controllers
             _db.SaveChanges();
         }
 
+        [HttpGet]
+        public IActionResult CreateQuestion()
+        {
+            Question question = new Question();
+            question.questionId = Guid.NewGuid();
+            return View(question);
+
+        }
+
+        [HttpPost,ActionName("CreateQuestion")]
+        public IActionResult CreateQuestionPost(string values)
+        {
+            Question newquestion = new Question();
+            newquestion.questionId = Guid.NewGuid();
+            JsonConvert.PopulateObject(values, newquestion);
+
+            if (!TryValidateModel(newquestion))
+                return BadRequest();
+
+            _db.Questions.Add(newquestion);
+            _db.SaveChanges();
+            return RedirectToAction(nameof(Index));
+
+        }
 
     }
 }

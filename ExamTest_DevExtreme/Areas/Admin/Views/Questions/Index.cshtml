@@ -1,141 +1,199 @@
-﻿@model List<Question>
-
-@using Exam_Test.Models
+﻿@using Exam_Test.Models
+@model List<Question>
 <h2>Questions</h2>
 <br /><br />
-<div class="left">
+@(Html.DevExtreme().DataGrid<Exam_Test.Models.Question>()
 
-    @(Html.DevExtreme().List()
-        .ID("list")
-        .Grouped(true)
+    .ID("gridContainer")
+    .ShowBorders(true)
+    .Paging(paging => paging.Enabled(false))
+    .Editing(editing =>
+    {
+        editing.Mode(GridEditMode.Form);
+        editing.AllowAdding(true);
+        editing.AllowDeleting(true);
+        editing.AllowUpdating(true);
+    })
+    .Columns(columns =>
+    {
+        columns.AddFor(m => m.questionStr)
         .Visible(true)
-        .SearchEnabled(true)
-        .SelectionMode(ListSelectionMode.Single)
-        .DataSource(d => d.Mvc().Controller("Questions").Key("questionId").LoadAction("GetQuestions"))
-        .DataSourceOptions(o => o.Group("Section.name").SearchExpr(new string[] { "questionStr", "Section.name"}))
-        .SelectedItems(new[] { Model.FirstOrDefault() })
-        .ItemTemplate(@<text>
-                    <div>
-                        <div class="hotel">
-                            <div class="name"><%= questionStr %></div>
-                        </div>
-                        <div class="price-container">
-                            <div class="price"><10></div>
-                            <div class="caption">Point</div>
-                        </div>
-                    </div>
-        </text>)
-.OnSelectionChanged("selectionChanged")
-    )
-</div>
-<div class="right">
-    <div class="header">
-        <div class="name-container">
-            <div class="name"></div>
-            <div class="type"></div>
-        </div>
-        <div class="price-container">
-            <div class="price"></div>
-            <div class="caption">Point</div>
-        </div>
-    </div>
-    @*@(Html.DevExtreme().TileView()
-            .ID("tile")
-            .NoDataText("")
-            .Height(224)
-            .BaseItemHeight(100)
-            .BaseItemWidth(137)
-            .ItemMargin(12)
-            .ItemTemplate(@<text>
-                        <div class="tile-image" style="background-image: url(<%= '../../images/hotels/' + FileName %>);"></div>
-            </text>)
-        )*@
+        .FormItem(i => i
+            .Editor(e=>e
+                .TextArea()
+                .Height(100)
+            )
+            .ColSpan(2)
+        )
+    ;
 
-    <div class="address"></div>
-    <div class="description"></div>
-</div>
+        columns.AddFor(m => m.sectionId)
+            .Lookup(Lookup => Lookup
+                .DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetSections").Key("sectionId"))
+                .DisplayExpr("name")
+                .ValueExpr("sectionId")
+            )
+            .FormItem(i => i
+                .Editor(e => e
+                    .DropDownBox()
+                       .ValueExpr("sectionId")
+                       .DisplayExpr("name")
+                       .DropDownOptions(o => o.Height(300))
+                       .DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetSections")
+                            .UpdateAction("Put")
+                            .InsertAction("Post")
+                            .DeleteAction("Delete").Key("sectionId")
+                       )
+                       .Placeholder("Select a value...")
+                       .ShowClearButton(true)
+                       .OnValueChanged("treeBox_valueChanged")
+                       .ContentTemplate(new TemplateName("EmbeddedTreeViewSingle"))
+                    )
+            )
+        ;
+
+        columns.AddFor(m => m.hint)
+        .Visible(true)
+        .FormItem(i => i
+            .Editor(e => e
+                .TextArea()
+                .Height(100)
+            )
+            .ColSpan(2)
+        )
+        ;
+
+
+        columns.AddFor(m => m.type)
+                .Lookup(lookup => lookup
+                    .DataSource(Html.GetEnumSelectList<QuestionType>()
+                        .Select(l => new { Value = int.Parse(l.Value), Text = l.Text })
+                    )
+                    .ValueExpr("Value")
+                    .DisplayExpr("Text")
+        );
+
+
+    })
+    .DataSource(d => d.Mvc()
+        .Area("Admin")
+        .Controller("Questions")
+        .LoadAction("GetQuestions")
+        .UpdateAction("Put")
+        .InsertAction("Post")
+        .DeleteAction("Delete")
+        .Key("questionId")
+
+    )
+)
+
+
+@using (Html.DevExtreme().NamedTemplate("EmbeddedTreeViewSingle"))
+{
+    @(Html.DevExtreme().TreeView()
+        .DataSource(d => d.Mvc().Controller("Sections").Key("sectionId")
+            .LoadAction("GetSections")
+            .UpdateAction("Put")
+            .InsertAction("Post")
+            .DeleteAction("Delete").Key("sectionId")
+        )
+        .KeyExpr("sectionId")
+        .DisplayExpr("name")
+        .ItemsExpr("name")
+        .ParentIdExpr("parentId")
+        .DataStructure(TreeViewDataStructure.Plain)
+        .SelectionMode(NavSelectionMode.Single)
+        .SelectByClick(true)
+        .Height(235)
+        .OnItemSelectionChanged(@<text>
+                    function(args) {
+                    var nodes = args.component.getNodes(),
+                    value = getSelectedItemsKeys(nodes);
+
+                    component.option("value", value);
+                    }
+        </text>)
+        .OnContentReady(@<text>
+            function(args) {
+            syncTreeViewSelection(args.component, component.option("value"));
+            }
+        </text>)
+    )
+}
 
 <script>
-    function selectionChanged(e) {
-        var question = e.addedItems[0];
-        var tile = $("#tile").dxTileView("instance");
-        //tile.option("dataSource", hotel.Images);
-        $(".header .name").text(question.questionStr);
-        $(".header .price").text("10");// $(".header .price").text("$" + hotel.Price);
-        //$(".header .type").removeClass("diamond platinum gold");
-        //$(".header .type").addClass(question.type.toLowerCase());
-        $(".right .description").text("Description");//$(".right .description").text(hotel.Description);
-        // $(".right .address").text(hotel.Postal_Code + ", " + hotel.Address);
+    function logEvent(eventName) {
+        var logList = $("#events ul"),
+            newItem = $("<li>", { text: eventName });
+
+        logList.prepend(newItem);
+    }
+
+function getFormInstance() {
+        return $("#form").dxForm("instance");
+    }
+
+    function selectBox_valueChanged(data) {
+        getFormInstance().option("formData", data.value);
+    }
+
+    function labelLocation_changed(data) {
+        getFormInstance().option("labelLocation", data.value);
+    }
+
+    function colCount_changed(data) {
+        getFormInstance().option("colCount", data.value);
+    }
+
+    function minColWidth_changed(data) {
+        getFormInstance().option("minColWidth", data.value);
+    }
+
+    function formWidth_changed(data) {
+        getFormInstance().option("width", data.value);
+    }
+
+    function readOnly_changed(data) {
+        getFormInstance().option("readOnly", data.value);
+    }
+
+    function showColonAfterLabel_changed(data) {
+        getFormInstance().option("showColonAfterLabel", data.value);
+    }
+
+
+    function syncTreeViewSelection(treeView, value) {
+        if (!value) {
+            treeView.unselectAll();
+        } else {
+            treeView.selectItem(value);
+        }
+    }
+
+    function getSelectedItemsKeys(items) {
+        var result = [];
+        items.forEach(function (item) {
+            if (item.selected) {
+                result.push(item.key);
+            }
+            if (item.items.length) {
+                result = result.concat(getSelectedItemsKeys(item.items));
+            }
+        });
+        return result;
+    }
+
+    function treeBox_valueChanged(e) {
+        var $treeView = e.component.content().find(".dx-treeview");
+        if($treeView.length) {
+            syncTreeViewSelection($treeView.dxTreeView("instance"), e.value);
+        }
+    }
+
+    //form
+    function getFormInstance() {
+        return $("#form").dxForm("instance");
     }
 </script>
 
-<style>
 
-    .left {
-        float: left;
-        width: 330px;
-        height: 470px;
-        padding: 20px;
-        background: rgba(191, 191, 191, 0.15);
-        margin-right: 30px;
-    }
-
-    .right {
-        overflow: hidden;
-    }
-
-    .left #list .dx-list-group-header {
-        color: #f05b41;
-        font-weight: normal;
-        font-size: 18px;
-    }
-
-    .left #list .hotel {
-        float: left;
-    }
-
-        .left #list .hotel .name {
-            font-weight: bold;
-        }
-
-    .right .header {
-        height: 70px;
-    }
-
-        .right .header .name-container {
-            float: left;
-        }
-
-        .right .header .name {
-            font-size: 30px;
-            font-weight: bold;
-        }
-
-        .right .header .price-container {
-            padding-top: 27px;
-        }
-
-    .right .name-container .type {
-        margin-top: 0;
-    }
-
-    .right #tile {
-        margin: 0 -12px 0 -12px;
-    }
-
-    .right .tile-image {
-        height: 100%;
-        width: 100%;
-        background-size: cover;
-    }
-
-    .right .address {
-        padding-top: 30px;
-        font-size: 18px;
-        opacity: 0.7;
-    }
-
-    .right .description {
-        margin: 10px 0;
-    }
-</style>
